@@ -1,0 +1,232 @@
+
+
+
+POST http://localhost:8080/api/test/employee
+
+##########
+
+POST http://localhost:8080/api/Mail/Send
+Content-Type: application/json
+
+{
+  "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJBZXRhIiwiaWF0IjoxNjg0NDE2ODY0LCJleHAiOjE2ODUwMjE2NjR9.Ha_PAwfiWDImtDMY-6glzKM3LfWfIgW_ssmWw4r-WMH10ARbfKFJ4uuUg6mW67ZN"
+}
+
+##########
+
+
+##########
+
+POST http://localhost:8080/api/auth/signup
+Content-Type: application/json
+
+{
+"employeename":"Aeta",
+"email":"Aeta@testing.com",
+"password":"Aesting123",
+"role":"admin"
+}
+
+##########
+
+POST http://localhost:8080/api/auth/signin
+Content-Type: application/json
+
+{
+"employeename":"Aeta",
+"password":"Aesting123"
+}
+
+##########
+
+GET http://localhost:8080/api/test/all
+
+
+##########
+
+GET http://localhost:8080/statistics/Driver/DeliveryRatio/5
+
+##########
+
+GET http://localhost:8080/statistics/Driver/Action/Delivered/5
+
+##########
+
+GET http://localhost:8080/statistics/Driver/Assigned/5
+
+##########
+
+GET http://localhost:8080/statistics/status/Postpond/assignments-Assigned-in-past-x-days?x=5
+
+##########
+
+GET http://localhost:8080/statistics/assignments-in-past-x-days?x=5
+
+##########
+
+GET http://localhost:8080/api/History/status/filter-by-status-and-interval?status=Assigned&startDate=2023-05-14&endDate=2023-05-14
+
+##########
+
+GET http://localhost:8080/api/History/status/Postpond
+
+##########
+
+GET http://localhost:8080/api/History/status/Assigned
+
+##########
+
+GET http://localhost:8080/api/History/driver/6452bad87f1768f31b1908c5
+
+##########
+
+GET http://localhost:8080/api/History/package/6452d7017f1768f31b29db79
+
+##########
+
+GET http://localhost:8080/api/History/history/sort-by-date
+
+##########
+GET http://localhost:8080/api/History/sort-by-interval?startDate=2023-05-14&endDate=2023-05-15
+
+##########
+
+POST http://localhost:8080/packages/assign-to-driver
+
+##########
+
+PUT http://localhost:8080/packages/schedule-toggle?enabled=true
+
+##########
+
+PUT http://localhost:8080/packages/schedule/cron?time=09:30
+
+##########
+
+GET http://localhost:8080/packages/6452bad87f1768f31b1908c6/status
+
+##########
+
+POST http://localhost:8080/packages/restart-task
+
+##########
+
+GET http://localhost:8080/packages/6452bad87f1768f31b1908c6/schedule?week=19
+
+##########
+
+GET http://localhost:8080/packages/schedules/19
+
+##########
+
+GET http://localhost:8080/packages/schedules/19/Monday
+
+##########
+
+GET http://localhost:8080/packages/schedules/19/Monday/6452bad87f1768f31b1908c6
+
+##########
+
+GET http://localhost:8080/packages/schedules/Active-CurrentWeek-Drivers
+
+
+##########
+
+GET http://localhost:8080/packages/scheduleUpdates/321/20
+
+##########
+
+GET http://localhost:8080/packages/schedules/Active-Currently-Drivers
+
+##########
+
+POST http://localhost:8080/packages/scheduleUpdates
+Content-Type: application/json
+
+{
+  "driverId": "321",
+  "week": 20,
+  "input": "Thursday 09:00AM 05:00PM;Friday 12:00AM 06:00PM;Sunday  08:00AM 05:00PM"
+}
+
+##########
+POST http://localhost:8080/packages/DailyScheduleUpdates
+Content-Type: application/json
+
+{
+  "driverId": "321",
+  "week": 39,
+  "dayOfWeek": "Monday",
+  "workingHours": {
+    "start": "11:22 AM",
+    "end": "11:22 PM"
+  }
+}
+
+##############################
+
+DELETE http://localhost:8080/packages/deleteDriverWorkDay?driverId=123&week=20&dayOfWeek=Monday
+
+##############################
+
+DELETE http://localhost:8080/packages/DeleteDriverWeekSchedule?driverId=123&week=20
+
+##############################
+
+DELETE http://localhost:8080/packages/DeleteDriveSchedule?week=39
+
+##############################
+
+GET http://localhost:8080/packages/drivers/321/weekly-hours?week=20
+
+##############################
+
+GET http://localhost:8080/packages/6452bad87f1768f31b1908c5/daily-hours?week=19&dayOfWeek=Sunday
+
+##############################
+
+PUT http://localhost:8080/packages/toggle-scheduling?enabled=false
+
+##############################
+
+
+PUT http://localhost:8080/packages/schedule/recurring?interval=00:01&startTime=00:00&endTime=18:00&startDayOfWeek=MONDAY&endDayOfWeek=FRIDAY
+
+##############################
+
+
+PUT http://localhost:8080/packages/assign-to-driver-by-id?packageId=............&driverId=..........
+
+##########
+
+GET http://localhost:8080/packages/matching-drivers?packageId=6452d7017f1768f31b29db7a
+
+##########
+
+GET http://localhost:8080/packages/6452d7017f1768f31b29db79/delivery-location
+
+##########
+
+GET http://localhost:8080/packages/packages/by-date?date=2022-06-08
+
+##########
+
+GET http://localhost:8080/packages/date/2022-06-08
+
+##########
+
+GET http://localhost:8080/packages/assign-to-driver
+
+####################
+
+GET http://localhost:8080/packages/unassigned 
+
+####################
+GET http://localhost:8080/packages/unassigned-between
+
+####################
+GET http://localhost:8080/packages/by-driver
+
+####################
+
+GET http://localhost:8080/packages/by-delivery-date

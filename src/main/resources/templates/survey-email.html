@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delivery Satisfaction Survey</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+      background-image: url('https://example.com/background-texture.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .header {
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      color: #333333;
+      font-weight: 600;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .title-image {
+      margin-top: 20px;
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #555555;
+      font-size: 14px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dddddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #55b4d4;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    button {
+      background-color: #55b4d4;
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #3d9db9;
+    }
+
+    .footer {
+      margin-top: 30px;
+      color: #888888;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Delivery Satisfaction Survey</h1>
+      <img src="https://goto.onlinesurveybureau.com/images/survey.gif" alt="Survey GIF" class="title-image">
+    </div>
+
+    <form id="feedbackForm" onsubmit="submitFeedback(event)">
+      <div class="form-group">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="recipientEmail">Email:</label>
+        <input type="email" id="recipientEmail" name="recipientEmail" required>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Did we deliver your package properly?</label>
+        <select id="rating" name="rating" required>
+          <option value="">Select an option</option>
+          <option value="5">Excellent</option>
+          <option value="4">Very Good</option>
+          <option value="3">Good</option>
+          <option value="2">Fair</option>
+          <option value="1">Poor</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback">Please provide your feedback:</label>
+        <textarea id="feedback" name="feedback" rows="4" cols="50"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="useAgain">Would you use our service again?</label>
+        <select id="useAgain" name="useAgain" required>
+          <option value="">Select an option</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div class="footer">
+      <p>Thank you for using our service.</p>
+    </div>
+  </div>
+
+  <script>
+    function submitFeedback(event) {
+      event.preventDefault();
+
+      const recipientEmail = document.getElementById("recipientEmail").value;
+      const fullName = document.getElementById("fullName").value;
+      const rating = document.getElementById("rating").value;
+      const feedback = document.getElementById("feedback").value;
+      const useAgain = document.getElementById("useAgain").value;
+
+      // Create the feedback object
+      const feedbackData = {
+        recipientEmail: recipientEmail,
+        fullName: fullName,
+        rating: rating,
+        feedback: feedback,
+        useAgain: useAgain
+      };
+
+      // Send the feedback as JSON via a POST request
+      fetch('http://localhost:8080/api/feedback', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(feedbackData)
+        })
+        .then(response => {
+          if (response.ok) {
+            // Clear the form
+            document.getElementById("feedbackForm").reset();
+
+            // Update the template with a thank you message
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+              <div class="header">
+                <h1>Thank You for Your Feedback!</h1>
+                <img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/7803677/delivery-service-staff-clipart-sm.png" alt="Thank You Image" class="title-image">
+              </div>
+
+              <div class="message">
+                <p>Your feedback has been recorded successfully.</p>
+                <p>We appreciate your time and input.</p>
+              </div>
+
+              <div class="footer">
+                <p>This Email was sent by TED The Executive Delivery</p>
+              </div>
+            `;
+          } else {
+            alert('Failed to submit feedback.');
+          }
+        })
+        .catch(error => {
+          alert('An error occurred while submitting feedback.');
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>
